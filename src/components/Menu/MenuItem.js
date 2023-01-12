@@ -5,18 +5,18 @@ function MenuItem({ item }) {
 
   return (
     <li key={item.id}>
-      <div className="rounded-full h-40 w-40 overflow-hidden ">
+      <div className="rounded-full h-21 w-21 overflow-hidden ">
         <img src="https://picsum.photos/200" alt="Movie" />
       </div>
 
-      <h4>{item.name}</h4>
-      <p className="text-rose-600">{item.price}.00 EGP</p>
+      <h4 className="font-bold"> {item.name}</h4>
+      <p className="text-orange-500 text-bold text-sm">{item.price}.00 EGP</p>
 
       <button
         onClick={() => {
           addItem(item);
         }}
-        className="btn btn-outline btn-secondary text-xs gap-2"
+        className="btn btn-primary btn-xs btn-outline text-xs gap-2"
       >
         Add
         <svg

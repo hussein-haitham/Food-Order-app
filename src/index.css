@@ -46,3 +46,64 @@ SVG Icons - svgicons.sparkk.fr
   stroke: #4691f6;
   stroke-width: 1;
 }
+
+/* Define the animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply the animation to an element */
+.fade-in {
+  animation: fadeIn ease-in 330ms;
+}
+
+/* Define the animation */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Apply the animation to an element */
+.fade-out {
+  animation: fadeOut ease-out 1s;
+}
+
+
+/* Define the animation */
+@keyframes bump {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadein-down {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+  
+.fade-in-down{
+  animation: fadein-down 0.25s ease-in;
+}
+
+

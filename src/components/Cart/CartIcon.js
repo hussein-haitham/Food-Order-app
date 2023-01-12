@@ -1,7 +1,12 @@
-function CartIcon({ count }) {
+function CartIcon({ showCart, count }) {
   return (
     <div className="navbar-end">
-      <button className="btn btn-ghost btn-circle">
+      <button
+        onClick={() => {
+          showCart(true);
+        }}
+        className="btn btn-ghost btn-circle"
+      >
         <div className="indicator">
           <svg
             xmlns="http://www.w3.org/2000/svg"
