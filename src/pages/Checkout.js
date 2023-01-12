@@ -38,9 +38,17 @@ function Ceckout() {
       }
     } catch (error) {}
   }
+  const changePaymentHandler = (event) => {
+    const error = { ...errors };
+
+    if (event.target.value !== "") {
+      delete error[event.target.name];
+      setErrors({ error });
+    }
+  };
   const handleBlurInputs = (event) => {
     const validationRules = {
-      name: (value) => value.length > 0,
+      name: (value) => value.length > 0 && /^[a-zA-Z ]+$/.test(value),
       phone: (value) => !isNaN(value) && value.length > 0,
     };
 
@@ -57,18 +65,22 @@ function Ceckout() {
     setErrors({ ...errors, [event.target.name]: newErorr });
   };
   const submitHandler = (event) => {
-    console.log(nameRef.current.value);
     event.preventDefault();
+    let error = null;
+
     if (!nameRef.current.value) {
-      setErrors({ ...errors, name: "Please enter your name" });
-      return;
+      error = { ...error, name: "Please enter your name" };
     }
     if (!phoneRef.current.value) {
-      setErrors({ ...errors, phone: "Please enter your phone number" });
-      return;
+      error = { ...error, phone: "Please enter your phone number" };
     }
     if (!paymentRef.current.value) {
-      setErrors({ ...errors, payment: "Please choose a payment type" });
+      error = { ...error, payment: "Please choose a payment type" };
+    }
+
+    if (error) {
+      console.log("i got here");
+      setErrors(error);
       return;
     }
 
@@ -131,7 +143,11 @@ function Ceckout() {
             <label className="label font-bold">
               <span className="label-text">Payment method</span>
             </label>
-            <select ref={paymentRef} className="input input-sm">
+            <select
+              onChange={changePaymentHandler}
+              ref={paymentRef}
+              className="input input-sm"
+            >
               <option value="">Choose option</option>
               <option value="cash">Cash</option>
               <option value="credit">Credit Card</option>
