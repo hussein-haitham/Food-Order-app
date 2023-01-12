@@ -2,6 +2,7 @@ import CartIcon from "../components/Cart/CartIcon";
 import Cart from "../components/Cart/Cart";
 import { useContext } from "react";
 import { CartContext } from "../store/CartProvider";
+import { Link } from "react-router-dom";
 import SideBar from "../UI/SideBar";
 
 function NavigationHeader() {
@@ -39,7 +40,11 @@ function NavigationHeader() {
           </div>
         </div>
         <div className="navbar-center">
-          <a className="btn btn-ghost normal-case text-xl">Bittersweet</a>
+          <Link className="text-black" to={"/restaurant/res"}>
+            <button className="btn btn-ghost normal-case text-xl">
+              Bittersweet
+            </button>
+          </Link>
         </div>
 
         <CartIcon showCart={showCart} count={items.length} />

@@ -25,6 +25,7 @@ function MenuTabs() {
     //console.log(category.isActive);
     return (
       <a
+        key={category.name}
         onClick={activeTabHandler}
         className={`tab  no-underline ${
           category.isActive ? "tab-active fade-in" : ""
