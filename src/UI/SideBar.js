@@ -21,7 +21,7 @@ const useOutsideClick = (callback) => {
 
 function SideBar({ isShown, showCart, children }) {
   const handleClickOutside = () => {
-    showCart(true);
+    showCart(false);
   };
   const pointerRef = useOutsideClick(handleClickOutside);
   return (

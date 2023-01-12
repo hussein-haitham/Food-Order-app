@@ -59,7 +59,7 @@ SVG Icons - svgicons.sparkk.fr
 
 /* Apply the animation to an element */
 .fade-in {
-  animation: fadeIn ease-in 330ms;
+  animation: fadeIn ease-in 150ms;
 }
 
 /* Define the animation */
@@ -94,7 +94,7 @@ SVG Icons - svgicons.sparkk.fr
 @keyframes fadein-down {
   from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-3px);
       }
       to {
         opacity: 1;
@@ -103,7 +103,7 @@ SVG Icons - svgicons.sparkk.fr
     }
   
 .fade-in-down{
-  animation: fadein-down 0.25s ease-in;
+  animation: fadein-down 0.35s ease-in;
 }
 
 

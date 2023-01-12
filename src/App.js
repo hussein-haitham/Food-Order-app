@@ -1,6 +1,7 @@
 import NavigationHeader from "./Layout/NavigationHeader";
 
 import Restaurant from "./pages/Restaurant";
+import Checkout from "./pages/Checkout";
 import CartContextProvider from "./store/CartProvider";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <div className="w-full">
       <CartContextProvider>
         <NavigationHeader />
-        <Restaurant />
+        <Checkout />
       </CartContextProvider>
     </div>
   );

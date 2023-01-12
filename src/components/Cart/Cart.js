@@ -17,14 +17,12 @@ function Cart({
         </div>
         <div className="text-sm">
           <p className="font-bold">{item.name}</p>
-          <span className="text-sm font-bold text-orange-500">
-            {item.price}.00 egp
-          </span>
+          <span className="text-sm  text-orange-500">{item.price}.00 egp</span>
           <div className="control-box flex mt-2">
             <input
               className="w-8 bg-stone-100 rounded-full text-center"
               type="text"
-              disable={true}
+              readOnly
               value={item.count}
             />
             <button
@@ -63,12 +61,12 @@ function Cart({
       </div>
       <ul className="rounded-md ">
         {cartItems}
-        <li className="py-3">
+        <li key="cmr1" className="py-3">
           <label className="font-bold">Additional comments</label>
 
           <textarea name="w3review" rows="2" cols="20"></textarea>
         </li>
-        <li className="py-3 font-bold">
+        <li key="tamount1" className="py-3 font-bold">
           Total amount:{" "}
           <span className="text-orange-500">{totalAmount}.00 EGP</span>
         </li>
