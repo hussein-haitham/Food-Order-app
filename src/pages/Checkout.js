@@ -3,7 +3,7 @@ import { CartContext } from "../store/CartProvider";
 
 const firebaseUrl = "https://food-app-f2704-default-rtdb.firebaseio.com/";
 
-function Ceckout() {
+function Checkout() {
   const { items: cartItems, totalAmount } = useContext(CartContext);
 
   const [isSending, setIsSending] = useState(false);
@@ -39,11 +39,12 @@ function Ceckout() {
     } catch (error) {}
   }
   const changePaymentHandler = (event) => {
-    const error = { ...errors };
+    let error = { ...errors };
 
-    if (event.target.value !== "") {
+    if (event.target.value !== "" && error[event.target.name]) {
       delete error[event.target.name];
-      setErrors({ error });
+
+      setErrors(error);
     }
   };
   const handleBlurInputs = (event) => {
@@ -66,8 +67,7 @@ function Ceckout() {
   };
   const submitHandler = (event) => {
     event.preventDefault();
-    let error = null;
-
+    let error;
     if (!nameRef.current.value) {
       error = { ...error, name: "Please enter your name" };
     }
@@ -79,7 +79,6 @@ function Ceckout() {
     }
 
     if (error) {
-      console.log("i got here");
       setErrors(error);
       return;
     }
@@ -147,6 +146,7 @@ function Ceckout() {
               onChange={changePaymentHandler}
               ref={paymentRef}
               className="input input-sm"
+              name="payment"
             >
               <option value="">Choose option</option>
               <option value="cash">Cash</option>
@@ -172,4 +172,4 @@ function Ceckout() {
   );
 }
 
-export default Ceckout;
+export default Checkout;
