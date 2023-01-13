@@ -8,6 +8,7 @@ function Checkout() {
 
   const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState({});
+  const [inValidInput, setInValidInput] = useState(false);
 
   const nameRef = useRef();
   const phoneRef = useRef();
@@ -56,13 +57,15 @@ function Checkout() {
     const validationResult = validationRules[event.target.name](
       event.target.value
     );
+
+    console.log("I set it invalid", inValidInput);
     const errorMessage = {
       name: "Please enter a valid name ",
       phone: "Please enter a valid phone number",
-      payment: "Please choose payment type",
     };
 
     const newErorr = validationResult ? "" : errorMessage[event.target.name];
+    console.log("I am setting the errors");
     setErrors({ ...errors, [event.target.name]: newErorr });
   };
   const submitHandler = (event) => {
@@ -83,7 +86,7 @@ function Checkout() {
       return;
     }
 
-    sendOrder();
+    if (!inValidInput) sendOrder();
   };
   return (
     <section>
