@@ -1,5 +1,6 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../store/CartProvider";
+import { useForm } from "react-hook-form";
 
 const firebaseUrl = "https://food-app-f2704-default-rtdb.firebaseio.com/";
 
@@ -7,14 +8,14 @@ function Checkout() {
   const { items: cartItems, totalAmount } = useContext(CartContext);
 
   const [isSending, setIsSending] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [inValidInput, setInValidInput] = useState(false);
 
-  const nameRef = useRef();
-  const phoneRef = useRef();
-  const paymentRef = useRef();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isLoading },
+  } = useForm({ mode: "onBlur" });
 
-  async function sendOrder() {
+  async function sendOrder({ name, phone, payment }) {
     try {
       setIsSending(true);
       const orderDate = JSON.stringify(new Date());
@@ -23,10 +24,10 @@ function Checkout() {
         method: "POST",
         body: JSON.stringify({
           cartItems: [...cartItems],
-          name: nameRef.current.value,
-          phone: phoneRef.current.value,
+          name: name,
+          phone: phone,
           totalAmount: totalAmount,
-          payment: paymentRef.current.value,
+          payment: payment,
           orderDate: orderDate,
         }),
         headers: { "Content-type": "application/json" },
@@ -39,55 +40,7 @@ function Checkout() {
       }
     } catch (error) {}
   }
-  const changePaymentHandler = (event) => {
-    let error = { ...errors };
-
-    if (event.target.value !== "" && error[event.target.name]) {
-      delete error[event.target.name];
-
-      setErrors(error);
-    }
-  };
-  const handleBlurInputs = (event) => {
-    const validationRules = {
-      name: (value) => value.length > 0 && /^[a-zA-Z ]+$/.test(value),
-      phone: (value) => !isNaN(value) && value.length > 0,
-    };
-
-    const validationResult = validationRules[event.target.name](
-      event.target.value
-    );
-
-    console.log("I set it invalid", inValidInput);
-    const errorMessage = {
-      name: "Please enter a valid name ",
-      phone: "Please enter a valid phone number",
-    };
-
-    const newErorr = validationResult ? "" : errorMessage[event.target.name];
-    console.log("I am setting the errors");
-    setErrors({ ...errors, [event.target.name]: newErorr });
-  };
-  const submitHandler = (event) => {
-    event.preventDefault();
-    let error;
-    if (!nameRef.current.value) {
-      error = { ...error, name: "Please enter your name" };
-    }
-    if (!phoneRef.current.value) {
-      error = { ...error, phone: "Please enter your phone number" };
-    }
-    if (!paymentRef.current.value) {
-      error = { ...error, payment: "Please choose a payment type" };
-    }
-
-    if (error) {
-      setErrors(error);
-      return;
-    }
-
-    if (!inValidInput) sendOrder();
-  };
+  console.log(isLoading);
   return (
     <section>
       <header className="p-4 text-center bg-primary">
@@ -109,55 +62,53 @@ function Checkout() {
         </ul>
 
         <div className="form-control w-full max-w-xs  content-center">
-          <form onSubmit={submitHandler}>
+          <form
+            onSubmit={handleSubmit((data) => {
+              sendOrder(data);
+            })}
+          >
             <label className="label font-bold">
               <span className="label-text">Name</span>
             </label>
             <input
-              ref={nameRef}
-              name="name"
-              onBlur={handleBlurInputs}
+              {...register("name", {
+                required: "Please enter your name",
+                pattern: /^[a-zA-Z ]+$/,
+              })}
               type="text"
               className={`input input-sm input-bordered w-full max-w-xs ${
                 errors.name && "input-error"
               }`}
             />
-            {errors.name && (
-              <p className="text-xs text-error"> {errors.name}</p>
-            )}
-
+            <p className="text-xs text-error">{errors.name?.message}</p>
             <label className="label font-bold">
               <span className="label-text">Mobile phone</span>
             </label>
             <input
-              ref={phoneRef}
-              onBlur={handleBlurInputs}
-              name="phone"
+              {...register("phone", {
+                required: "Please enter a vlid phone number",
+                pattern: /^\d{11}$/,
+              })}
               type="text"
               className={`input input-sm input-bordered w-full max-w-xs ${
                 errors.phone && "input-error"
               }`}
             />
-            {errors.phone && (
-              <p className="text-xs text-error"> {errors.phone}</p>
-            )}
-
+            <p className="text-xs text-error">{errors.phone?.message}</p>
             <label className="label font-bold">
               <span className="label-text">Payment method</span>
             </label>
             <select
-              onChange={changePaymentHandler}
-              ref={paymentRef}
+              {...register("payment", {
+                required: "PLease choose payment method",
+              })}
               className="input input-sm"
-              name="payment"
             >
-              <option value="">Choose option</option>
               <option value="cash">Cash</option>
               <option value="credit">Credit Card</option>
             </select>
-            {errors.payment && (
-              <p className="text-xs text-error"> {errors.payment}</p>
-            )}
+            <p className="text-xs text-error">{errors.payment?.message}</p>
+
             <h2>Total amount: {totalAmount}</h2>
 
             <button
