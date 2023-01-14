@@ -61,7 +61,7 @@ function Checkout() {
           })}
         </ul>
 
-        <div className="form-control w-full max-w-xs  content-center">
+        <div className="form-control w-full max-w-xs ">
           <form
             onSubmit={handleSubmit((data) => {
               sendOrder(data);
@@ -80,7 +80,9 @@ function Checkout() {
                 errors.name && "input-error"
               }`}
             />
-            <p className="text-xs text-error">{errors.name?.message}</p>
+            {errors.name && (
+              <p className="text-xs text-error">Please enter a valid name</p>
+            )}
             <label className="label font-bold">
               <span className="label-text">Mobile phone</span>
             </label>
@@ -94,7 +96,9 @@ function Checkout() {
                 errors.phone && "input-error"
               }`}
             />
-            <p className="text-xs text-error">{errors.phone?.message}</p>
+            {errors.phone && (
+              <p className="text-xs text-error">Enter a valid phone number</p>
+            )}
             <label className="label font-bold">
               <span className="label-text">Payment method</span>
             </label>

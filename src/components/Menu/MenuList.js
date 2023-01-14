@@ -1,37 +1,11 @@
 import MenuItem from "./MenuItem";
-import { useState } from "react";
 
-function MenuList() {
-  const [menuItemsState, setMenuItemsState] = useState([
-    {
-      id: "f1",
-      name: "Shrimp Tempura",
-      price: 120,
-      count: 1,
-      category: "Main dish",
-    },
-    {
-      id: "f2",
-      name: "Pizza Margerita",
-      price: 500,
-      count: 1,
-      category: "Main dish",
-    },
-    {
-      id: "f3",
-      name: "Pasta Alfredo",
-      price: 350,
-      count: 1,
-      category: "Beverages",
-    },
-  ]);
-
-  const menuItems = menuItemsState.map((item) => (
-    <MenuItem key={item.id} item={item} />
-  ));
-  return (
-    <ul className="p-7 gap-9 text-center grid grid-cols-3 ">{menuItems}</ul>
+function MenuList({ activeTab, menuList }) {
+  menuList = menuList.map(
+    (item) =>
+      activeTab === item.category && <MenuItem key={item.id} item={item} />
   );
+  return <ul className=" p-6 gap-9">{menuList}</ul>;
 }
 
 export default MenuList;

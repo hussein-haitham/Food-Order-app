@@ -28,13 +28,15 @@ const cartReducer = (cartState, { type, payload }) => {
         !cart.items.find((item) => {
           if (item.id === payload.id) {
             item.count += 1;
-            cart.totalAmount += item.price;
+            cart.totalAmount = parseInt(cart.totalAmount);
+            cart.totalAmount += parseInt(item.price);
             return 1;
           }
         })
       ) {
         cart.items.push(payload);
-        cart.totalAmount += payload.price;
+        cart.totalAmount = parseInt(cart.totalAmount);
+        cart.totalAmount += parseInt(payload.price);
       }
 
       return cart;
@@ -44,7 +46,8 @@ const cartReducer = (cartState, { type, payload }) => {
       cart.items.find((item) => {
         if (item.id === payload.id) {
           /// Remove item's price from total amount
-          cart.totalAmount -= item.count * item.price;
+          cart.totalAmount = parseInt(cart.totalAmount);
+          cart.totalAmount -= parseInt(item.count) * parseInt(item.price);
           item.count = 1;
         }
       });
@@ -54,7 +57,8 @@ const cartReducer = (cartState, { type, payload }) => {
       cart.items.find((item) => {
         if (item.id === payload.id) {
           item.count += 1;
-          cart.totalAmount += item.price;
+          cart.totalAmount = parseInt(cart.totalAmount);
+          cart.totalAmount += parseInt(item.price);
         }
       });
       return cart;
@@ -63,7 +67,8 @@ const cartReducer = (cartState, { type, payload }) => {
       cart.items.find((item) => {
         if (item.id === payload.id && item.count > 0) {
           item.count -= 1;
-          cart.totalAmount -= item.price;
+          cart.totalAmount = parseInt(cart.totalAmount);
+          cart.totalAmount -= parseInt(item.price);
         }
       });
       return cart;
