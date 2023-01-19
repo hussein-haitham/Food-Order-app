@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 import MenuTabs from "./MenuTabs";
 import MenuList from "./MenuList";
-import { Link } from "react-router-dom";
-import FallBack from "../../UI/FallBack";
 
-//////////! FIX ACTIVE TAB BUG && REMOVE DUMMYCATS AND LOAD FROM GET////////////
+import FallBack from "../../UI/FallBack";
 
 const dummyCats = [
   { name: "Main dish", isActive: true },
@@ -76,9 +74,6 @@ function Menu() {
           <MenuList activeTab={activeTab} menuList={menuList} />
         )}
       </div>
-      <Link to={"/checkout"}>
-        <button className="btn btn-primary ">Checkout</button>
-      </Link>
     </section>
   );
 }

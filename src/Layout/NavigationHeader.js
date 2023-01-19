@@ -56,6 +56,7 @@ function NavigationHeader() {
           handleIncrement={incrementCartItem}
           handleRemove={removeItem}
           totalAmount={totalAmount}
+          showCart={showCart}
         />
       </SideBar>
     </>

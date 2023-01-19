@@ -3,6 +3,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import NavigationHeader from "./Layout/NavigationHeader";
 
 import AddItem from "./components/Menu/AddItem";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import MenuManagement from "./pages/admin/MenuManagement";
 import Restaurant from "./pages/Restaurant";
 import Checkout from "./pages/Checkout";
 import CartContextProvider from "./store/CartProvider";
@@ -23,6 +25,14 @@ function App() {
             <Checkout />
           </Route>
         </CartContextProvider>
+      </Switch>
+      <Switch>
+        <Route path="/admin" exact>
+          <AdminDashboard />
+        </Route>
+        <Route path="/menu-manage">
+          <MenuManagement />
+        </Route>
       </Switch>
     </main>
   );

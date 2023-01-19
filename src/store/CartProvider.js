@@ -10,6 +10,7 @@ export const CartContext = createContext({
   showCart: (show) => {},
   incrementCartItem: (item) => {},
   decrementCartItem: (item) => {},
+  resetCart: () => {},
 });
 
 const ACTIONS = {
@@ -18,9 +19,10 @@ const ACTIONS = {
   INCREMENT: "increment",
   DECREMENT: "decrement",
   SHOW: "show-cart",
+  RESET: "reset-cart",
 };
 
-const cartReducer = (cartState, { type, payload }) => {
+const cartReducer = (cartState, { type, payload = "" }) => {
   const cart = { ...cartState };
   switch (type) {
     case ACTIONS.ADD:
@@ -73,6 +75,9 @@ const cartReducer = (cartState, { type, payload }) => {
       });
       return cart;
 
+    case ACTIONS.RESET:
+      return { ...cart, items: [], totalAmount: 0 };
+
     case ACTIONS.SHOW:
       return { ...cart, isShown: payload };
     default:
@@ -91,12 +96,17 @@ function CartContextProvider({ children }) {
   const handleIncrementCartItem = (item) => {
     dispatch({ type: "increment", payload: item });
   };
+
   const handleDecrementCartItem = (item) => {
     dispatch({ type: "decrement", payload: item });
   };
 
   const handleShowCart = (isShown) => {
     dispatch({ type: "show-cart", payload: isShown });
+  };
+
+  const handleResetCart = () => {
+    dispatch({ type: "reset-cart" });
   };
 
   const [cartState, dispatch] = useReducer(cartReducer, {
@@ -108,6 +118,7 @@ function CartContextProvider({ children }) {
     showCart: handleShowCart,
     incrementCartItem: handleIncrementCartItem,
     decrementCartItem: handleDecrementCartItem,
+    resetCart: handleResetCart,
   });
 
   const contextValue = {

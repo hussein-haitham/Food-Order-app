@@ -19,7 +19,7 @@ function MenuTabs({ activeTabHandler, categories }) {
   return (
     <div className="mx-auto py-3 sticky top-0 ">
       <h1 className="text-center">Menu</h1>
-      <div className="tabs tabs-boxed place-content-center m-5 overflow-x-auto">
+      <div className="tabs tabs-boxed place-content-center m-5 overflow-x-scroll">
         {categories}
       </div>
     </div>

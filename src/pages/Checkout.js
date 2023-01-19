@@ -1,18 +1,20 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../store/CartProvider";
 import { useForm } from "react-hook-form";
+import CheckoutItems from "./CheckoutItems";
 
 const firebaseUrl = "https://food-app-f2704-default-rtdb.firebaseio.com/";
 
 function Checkout() {
-  const { items: cartItems, totalAmount } = useContext(CartContext);
+  const { items: cartItems, totalAmount, resetCart } = useContext(CartContext);
 
   const [isSending, setIsSending] = useState(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    reset,
+    formState: { errors },
   } = useForm({ mode: "onBlur" });
 
   async function sendOrder({ name, phone, payment }) {
@@ -29,45 +31,36 @@ function Checkout() {
           totalAmount: totalAmount,
           payment: payment,
           orderDate: orderDate,
+          orderStatus: "pending",
         }),
         headers: { "Content-type": "application/json" },
       });
 
       if (!response.ok) throw new Error("Unable to complete, please try again");
       else {
+        resetCart();
         setIsSending(false);
+        reset();
         return response;
       }
     } catch (error) {}
   }
-  console.log(isLoading);
+
   return (
     <section>
-      <header className="p-4 text-center bg-primary">
-        <h1 className="text-white ">Checkout</h1>
+      <header className="p-4 text-center bg-secondary prose">
+        <h2 className="text-white ">Checkout</h2>
       </header>
-      <div className="container mx-auto w-50%">
-        <ul className="flex">
-          {cartItems.map((item) => {
-            return (
-              <li key={item.id}>
-                {item.name}
-                {item.count}
-                <div className="rounder-full w-16 h-16">
-                  <img src="https://picsum.photos/200" alt="img" />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="form-control w-full max-w-xs ">
+      <div className="flex justify-center">
+        <CheckoutItems items={cartItems} />
+        <div className="form-control max-w-xs prose  ">
           <form
+            className="prose"
             onSubmit={handleSubmit((data) => {
               sendOrder(data);
             })}
           >
-            <label className="label font-bold">
+            <label className="label font-bold text-slate-600">
               <span className="label-text">Name</span>
             </label>
             <input
@@ -88,7 +81,7 @@ function Checkout() {
             </label>
             <input
               {...register("phone", {
-                required: "Please enter a vlid phone number",
+                required: "Please enter a valid phone number",
                 pattern: /^\d{11}$/,
               })}
               type="text"
@@ -113,16 +106,21 @@ function Checkout() {
             </select>
             <p className="text-xs text-error">{errors.payment?.message}</p>
 
-            <h2>Total amount: {totalAmount}</h2>
+            <h4>
+              Total amount{" "}
+              <span className="text-secondary">{totalAmount}.00 EGP</span>
+            </h4>
 
-            <button
-              className={`btn btn-primary btn-sm mt-5 w-full ${
-                isSending && "loading"
-              }`}
-              type="submit"
-            >
-              Pay
-            </button>
+            {cartItems.length > 0 && (
+              <button
+                className={`btn btn-secondary btn-sm mt-5 w-full ${
+                  isSending && "loading"
+                }`}
+                type="submit"
+              >
+                Pay
+              </button>
+            )}
           </form>
         </div>
       </div>
