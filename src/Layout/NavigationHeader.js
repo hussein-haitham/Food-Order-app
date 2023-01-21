@@ -18,7 +18,7 @@ function NavigationHeader() {
 
   return (
     <>
-      <header className="navbar bg-base-100 sticky top-0 shadow-md bg-white z-10">
+      <header className="navbar bg-base-100 sticky top-0 shadow-md bg-white z-10 ">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -41,7 +41,7 @@ function NavigationHeader() {
         </div>
         <div className="navbar-center">
           <Link className="text-black" to={"/restaurant/res"}>
-            <button className="btn btn-ghost normal-case text-xl">
+            <button className=" normal-case text-xl font-bold ">
               Bittersweet
             </button>
           </Link>

@@ -96,14 +96,14 @@ function Cart({
           <span className="text-secondary">{totalAmount}.00 EGP</span>
         </li>
       </ul>
-      <Link to="/checkout">
+      <Link className="no-underline" to="/checkout">
         <button
           onClick={() => {
             showCart(false);
           }}
-          className="btn btn-sm mt-2 btn-success text-xs text-white w-full"
+          className="btn btn-sm mt-2 btn-success text-xs no-underline text-white w-full"
         >
-          Proceed to payment
+          <span className="no-underline">Proceed to payment</span>
         </button>
       </Link>
     </div>

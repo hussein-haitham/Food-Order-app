@@ -5,7 +5,7 @@ function MenuList({ activeTab, menuList }) {
     (item) =>
       activeTab === item.category && <MenuItem key={item.id} item={item} />
   );
-  return <ul className=" p-6 gap-9">{menuList}</ul>;
+  return <ul className="gap-9">{menuList}</ul>;
 }
 
 export default MenuList;

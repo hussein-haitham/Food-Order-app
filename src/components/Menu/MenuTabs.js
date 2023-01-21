@@ -7,8 +7,8 @@ function MenuTabs({ activeTabHandler, categories }) {
       <a
         key={category.name}
         onClick={activeTabHandler}
-        className={`tab  no-underline ${
-          category.isActive ? "tab-active fade-in" : ""
+        className={`tab no-underline px-4 ${
+          category.isActive ? "tab-active fade-in text-secondary" : ""
         }`}
       >
         {category.name}
@@ -17,10 +17,9 @@ function MenuTabs({ activeTabHandler, categories }) {
   });
 
   return (
-    <div className="mx-auto py-3 sticky top-0 ">
-      <h1 className="text-center">Menu</h1>
-      <div className="tabs tabs-boxed place-content-center m-5 overflow-x-scroll">
-        {categories}
+    <div className=" sticky top-0">
+      <div className=" tabs bg-white font-bold shadow-sm  p-1 m-5 overflow-auto touch-pan-x scrollbar-hide rounded-md">
+        <div className="flex-none">{categories}</div>
       </div>
     </div>
   );
